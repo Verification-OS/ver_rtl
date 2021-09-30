@@ -1,0 +1,289 @@
+
+`ifndef _FV_TRIM_INDIV_INSTR2_VH
+`define _FV_TRIM_INDIV_INSTR2_VH
+
+// select individual instructions to be excluded from consideration for input
+
+`define FV_EXCLUDE_INSTR_ADDI
+`define FV_EXCLUDE_INSTR_SLTI
+`define FV_EXCLUDE_INSTR_SLTIU
+`define FV_EXCLUDE_INSTR_XORI
+//`define FV_EXCLUDE_INSTR_ORI
+`define FV_EXCLUDE_INSTR_ANDI
+`define FV_EXCLUDE_INSTR_SLLI
+`define FV_EXCLUDE_INSTR_SRLI
+`define FV_EXCLUDE_INSTR_SRAI
+`ifdef FV_INCLUDE_RV64
+ `define FV_EXCLUDE_INSTR_ADDIW
+ `define FV_EXCLUDE_INSTR_SLLIW
+ `define FV_EXCLUDE_INSTR_SRLIW
+ `define FV_EXCLUDE_INSTR_SRAIW
+`endif
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CADDI4SPN
+ `define FV_EXCLUDE_INSTR_CADDI
+ `ifdef FV_INCLUDE_RV64
+  `define FV_EXCLUDE_INSTR_CADDIW
+ `endif
+ `define FV_EXCLUDE_INSTR_CADDI16SP
+ `define FV_EXCLUDE_INSTR_CSRLI
+ `define FV_EXCLUDE_INSTR_CSRAI
+ `define FV_EXCLUDE_INSTR_CANDI
+ `define FV_EXCLUDE_INSTR_CSLLI
+`endif //  `ifdef FV_INCLUDE_RVC
+
+// =======================
+`define FV_EXCLUDE_INSTR_ADD
+`define FV_EXCLUDE_INSTR_SUB
+`define FV_EXCLUDE_INSTR_SLL
+`define FV_EXCLUDE_INSTR_SLT
+`define FV_EXCLUDE_INSTR_SLTU
+`define FV_EXCLUDE_INSTR_XOR
+`define FV_EXCLUDE_INSTR_SRL
+`define FV_EXCLUDE_INSTR_SRA
+`define FV_EXCLUDE_INSTR_OR
+`define FV_EXCLUDE_INSTR_AND
+`ifdef FV_INCLUDE_RV64
+ `define FV_EXCLUDE_INSTR_ADDW
+ `define FV_EXCLUDE_INSTR_SUBW
+ `define FV_EXCLUDE_INSTR_SLLW
+ `define FV_EXCLUDE_INSTR_SRLW
+ `define FV_EXCLUDE_INSTR_SRAW
+`endif
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CSUB
+ `define FV_EXCLUDE_INSTR_CXOR
+ `define FV_EXCLUDE_INSTR_COR
+ `define FV_EXCLUDE_INSTR_CAND
+ `ifdef FV_INCLUDE_RV64
+  `define FV_EXCLUDE_INSTR_CSUBW
+  `define FV_EXCLUDE_INSTR_CADDW
+ `endif
+ `define FV_EXCLUDE_INSTR_CADD
+`endif //  `ifdef FV_INCLUDE_RVC
+
+// =======================
+// NOTE: LUI may always be needed for accessing dmem ranges
+`define FV_EXCLUDE_INSTR_LUI
+`define FV_EXCLUDE_INSTR_AUIPC
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CNOP
+ `define FV_EXCLUDE_INSTR_CLI
+ `define FV_EXCLUDE_INSTR_CLUI
+ `define FV_EXCLUDE_INSTR_CMV
+`endif
+
+// =======================
+// need to have FV_INCLUDE_RV32M defined for individual inclusion
+// DIV/REM also have a group exclude FV_EXCLUDE_RV32M_DIV
+`define FV_EXCLUDE_INSTR_MUL
+`define FV_EXCLUDE_INSTR_MULH
+`define FV_EXCLUDE_INSTR_MULHSU
+`define FV_EXCLUDE_INSTR_MULHU
+`define FV_EXCLUDE_INSTR_DIV
+`define FV_EXCLUDE_INSTR_DIVU
+`define FV_EXCLUDE_INSTR_REM
+`define FV_EXCLUDE_INSTR_REMU
+`ifdef FV_INCLUDE_RV64
+ `define FV_EXCLUDE_INSTR_MULW
+ `define FV_EXCLUDE_INSTR_DIVW
+ `define FV_EXCLUDE_INSTR_DIVUW
+ `define FV_EXCLUDE_INSTR_REMW
+ `define FV_EXCLUDE_INSTR_REMUW
+`endif
+
+// =======================
+// load/store instructions
+//`define FV_EXCLUDE_INSTR_LB
+`define FV_EXCLUDE_INSTR_LH
+`define FV_EXCLUDE_INSTR_LW
+`define FV_EXCLUDE_INSTR_LBU
+`define FV_EXCLUDE_INSTR_LHU
+//`define FV_EXCLUDE_INSTR_SB
+`define FV_EXCLUDE_INSTR_SH
+`define FV_EXCLUDE_INSTR_SW
+
+`ifdef FV_INCLUDE_RV64
+ `define FV_EXCLUDE_INSTR_LWU
+ `define FV_EXCLUDE_INSTR_LD
+ `define FV_EXCLUDE_INSTR_SD
+`endif
+
+`ifdef FV_INCLUDE_RVF
+ `define FV_EXCLUDE_INSTR_FLW
+ `define FV_EXCLUDE_INSTR_FSW
+ `ifdef FV_INCLUDE_RVD
+  `define FV_EXCLUDE_INSTR_FLD
+  `define FV_EXCLUDE_INSTR_FSD
+ `endif //  `ifdef FV_INCLUDE_RVD
+`endif //  `ifdef FV_INCLUDE_RVF
+
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CLW
+ `define FV_EXCLUDE_INSTR_CSW
+ `define FV_EXCLUDE_INSTR_CLWSP
+ `define FV_EXCLUDE_INSTR_CSWSP
+
+ `ifdef FV_INCLUDE_RV64
+  `define FV_EXCLUDE_INSTR_CLD
+  `define FV_EXCLUDE_INSTR_CSD
+  `define FV_EXCLUDE_INSTR_CLDSP
+  `define FV_EXCLUDE_INSTR_CSDSP
+ `else
+  `ifdef FV_INCLUDE_RVF
+   `define FV_EXCLUDE_INSTR_CFLW
+   `define FV_EXCLUDE_INSTR_CFSW
+   `define FV_EXCLUDE_INSTR_CFLWSP
+   `define FV_EXCLUDE_INSTR_CFSWSP
+  `endif
+ `endif
+
+ `ifdef FV_INCLUDE_RV128
+  `define FV_EXCLUDE_INSTR_CLQ
+  `define FV_EXCLUDE_INSTR_CSQ
+  `define FV_EXCLUDE_INSTR_CLQSP
+  `define FV_EXCLUDE_INSTR_CSQSP
+ `else
+  `ifdef FV_INCLUDE_RVD
+   `define FV_EXCLUDE_INSTR_CFLD
+   `define FV_EXCLUDE_INSTR_CFSD
+   `define FV_EXCLUDE_INSTR_CFLDSP
+   `define FV_EXCLUDE_INSTR_CFSDSP
+  `endif
+ `endif
+
+`endif //  `ifdef FV_INCLUDE_RVC
+
+// ================================
+// jump and branches also have a group exclude by FV_EXCLUDE_JMP_BR
+`define FV_EXCLUDE_INSTR_BEQ
+`define FV_EXCLUDE_INSTR_BNE
+`define FV_EXCLUDE_INSTR_BLT
+`define FV_EXCLUDE_INSTR_BGE
+`define FV_EXCLUDE_INSTR_BLTU
+`define FV_EXCLUDE_INSTR_BGEU
+`define FV_EXCLUDE_INSTR_JAL
+`define FV_EXCLUDE_INSTR_JALR
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CBEQZ
+ `define FV_EXCLUDE_INSTR_CBNEZ
+ // CJAL is never generated if FV_INCLUDE_RV64
+ `define FV_EXCLUDE_INSTR_CJAL
+ `define FV_EXCLUDE_INSTR_CJ
+ `define FV_EXCLUDE_INSTR_CJR
+ `define FV_EXCLUDE_INSTR_CJALR
+`endif
+
+// =======================
+// these two also have a group exclude by FV_EXCLUDE_ECALL_EBREAK
+`define FV_EXCLUDE_INSTR_ECALL
+`define FV_EXCLUDE_INSTR_EBREAK
+`ifdef FV_INCLUDE_RVC
+ `define FV_EXCLUDE_INSTR_CEBREAK
+`endif
+
+// =======================
+// need to have FV_INCLUDE_MISC_MEM defined for individual inclusion of FENCE instructions
+`define FV_EXCLUDE_INSTR_FENCE
+`define FV_EXCLUDE_INSTR_FENCE_I
+
+// =======================
+`ifdef FV_INCLUDE_RVA
+// `define FV_EXCLUDE_INSTR_LRW
+// `define FV_EXCLUDE_INSTR_SCW
+ `define FV_EXCLUDE_INSTR_AMOSWAPW
+ `define FV_EXCLUDE_INSTR_AMOADDW
+ `define FV_EXCLUDE_INSTR_AMOXORW
+ `define FV_EXCLUDE_INSTR_AMOANDW
+ `define FV_EXCLUDE_INSTR_AMOORW
+ `define FV_EXCLUDE_INSTR_AMOMINW
+ `define FV_EXCLUDE_INSTR_AMOMAXW
+ `define FV_EXCLUDE_INSTR_AMOMINUW
+ `define FV_EXCLUDE_INSTR_AMOMAXUW
+ `ifdef FV_INCLUDE_RV64
+  `define FV_EXCLUDE_INSTR_LRD
+  `define FV_EXCLUDE_INSTR_SCD
+//  `define FV_EXCLUDE_INSTR_AMOSWAPD
+//  `define FV_EXCLUDE_INSTR_AMOADDD
+  `define FV_EXCLUDE_INSTR_AMOXORD
+  `define FV_EXCLUDE_INSTR_AMOANDD
+  `define FV_EXCLUDE_INSTR_AMOORD
+  `define FV_EXCLUDE_INSTR_AMOMIND
+  `define FV_EXCLUDE_INSTR_AMOMAXD
+  `define FV_EXCLUDE_INSTR_AMOMINUD
+  `define FV_EXCLUDE_INSTR_AMOMAXUD
+ `endif //  `ifdef FV_INCLUDE_RV64
+`endif //  `ifdef FV_INCLUDE_RVA
+
+// =======================
+`ifdef FV_INCLUDE_RVF
+ `define FV_EXCLUDE_INSTR_FMADDS
+ `define FV_EXCLUDE_INSTR_FMSUBS
+ `define FV_EXCLUDE_INSTR_FNMSUBS
+ `define FV_EXCLUDE_INSTR_FNMADDS
+ `define FV_EXCLUDE_INSTR_FADDS
+ `define FV_EXCLUDE_INSTR_FSUBS
+ `define FV_EXCLUDE_INSTR_FMULS
+ `define FV_EXCLUDE_INSTR_FDIVS
+ `define FV_EXCLUDE_INSTR_FSQRTS
+ `define FV_EXCLUDE_INSTR_FSGNJS
+ `define FV_EXCLUDE_INSTR_FSGNJNS
+ `define FV_EXCLUDE_INSTR_FSGNJXS
+ `define FV_EXCLUDE_INSTR_FMINS
+ `define FV_EXCLUDE_INSTR_FMAXS
+ `define FV_EXCLUDE_INSTR_FCVTWS
+ `define FV_EXCLUDE_INSTR_FCVTWUS
+ `define FV_EXCLUDE_INSTR_FMVXW
+ `define FV_EXCLUDE_INSTR_FEQS
+ `define FV_EXCLUDE_INSTR_FLTS
+ `define FV_EXCLUDE_INSTR_FLES
+ `define FV_EXCLUDE_INSTR_FCLASSS
+ `define FV_EXCLUDE_INSTR_FCVTSW
+ `define FV_EXCLUDE_INSTR_FCVTSWU
+ `define FV_EXCLUDE_INSTR_FMVWX
+ `ifdef FV_INCLUDE_RV64
+  `define FV_EXCLUDE_INSTR_FCVTLS
+  `define FV_EXCLUDE_INSTR_FCVTLUS
+  `define FV_EXCLUDE_INSTR_FCVTSL
+  `define FV_EXCLUDE_INSTR_FCVTSLU
+ `endif
+ `ifdef FV_INCLUDE_RVD
+  `define FV_EXCLUDE_INSTR_FMADDD
+  `define FV_EXCLUDE_INSTR_FMSUBD
+  `define FV_EXCLUDE_INSTR_FNMSUBD
+  `define FV_EXCLUDE_INSTR_FNMADDD
+  `define FV_EXCLUDE_INSTR_FADDD
+  `define FV_EXCLUDE_INSTR_FSUBD
+  `define FV_EXCLUDE_INSTR_FMULD
+  `define FV_EXCLUDE_INSTR_FDIVD
+  `define FV_EXCLUDE_INSTR_FSQRTD
+  `define FV_EXCLUDE_INSTR_FSGNJD
+  `define FV_EXCLUDE_INSTR_FSGNJND
+  `define FV_EXCLUDE_INSTR_FSGNJXD
+  `define FV_EXCLUDE_INSTR_FMIND
+  `define FV_EXCLUDE_INSTR_FMAXD
+  `define FV_EXCLUDE_INSTR_FCVTSD
+  `define FV_EXCLUDE_INSTR_FCVTDS
+  `define FV_EXCLUDE_INSTR_FEQD
+  `define FV_EXCLUDE_INSTR_FLTD
+  `define FV_EXCLUDE_INSTR_FLED
+  `define FV_EXCLUDE_INSTR_FCLASSD
+  `define FV_EXCLUDE_INSTR_FCVTWD 
+  `define FV_EXCLUDE_INSTR_FCVTWUD
+  `define FV_EXCLUDE_INSTR_FCVTDW
+  `define FV_EXCLUDE_INSTR_FCVTDWU
+  `ifdef FV_INCLUDE_RV64
+   `define FV_EXCLUDE_INSTR_FCVTLD
+   `define FV_EXCLUDE_INSTR_FCVTLUD
+   `define FV_EXCLUDE_INSTR_FMVXD
+   `define FV_EXCLUDE_INSTR_FCVTDL
+   `define FV_EXCLUDE_INSTR_FCVTDLU
+   `define FV_EXCLUDE_INSTR_FMVDX
+  `endif
+ `endif //  `ifdef FV_INCLUDE_RVD
+
+`endif //  `ifdef FV_INCLUDE_RVF
+
+// CSR instructions have to be included explicitly by  FV_INCLUDE_RVZICSR
+
+`endif //  `ifndef _FV_TRIM_INDIV_INSTR2_VH
